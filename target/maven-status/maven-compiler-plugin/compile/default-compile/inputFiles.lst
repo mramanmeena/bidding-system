@@ -1,0 +1,7 @@
+/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/entity/Auction.java
+/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/repository/AuctionService.java
+/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/BiddingSystem.java
+/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/controllers/AuctionController.java
+/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/repository/AuctionTable.java
+/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/entity/bid.java
+/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/ArangoDBConfiguration.java

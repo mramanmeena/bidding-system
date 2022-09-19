@@ -1,0 +1,7 @@
+com/example/biddingsystem/entity/Auction.class
+com/example/biddingsystem/repository/AuctionService.class
+com/example/biddingsystem/entity/bid.class
+com/example/biddingsystem/ArangoDBConfiguration.class
+com/example/biddingsystem/BiddingSystem.class
+com/example/biddingsystem/controllers/AuctionController.class
+com/example/biddingsystem/repository/AuctionTable.class
