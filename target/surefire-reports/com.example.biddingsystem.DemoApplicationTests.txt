@@ -1,10 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.biddingsystem.DemoApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.067 s <<< FAILURE! - in com.example.biddingsystem.DemoApplicationTests
-contextLoads  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.IllegalStateException: Failed to load ApplicationContext
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'auctionController': Unsatisfied dependency expressed through field 'AuctionService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'auctionService': Unsatisfied dependency expressed through field 'auctiontable'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.example.biddingsystem.repository.AuctionTable' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'auctionService': Unsatisfied dependency expressed through field 'auctiontable'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.example.biddingsystem.repository.AuctionTable' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.example.biddingsystem.repository.AuctionTable' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.053 s - in com.example.biddingsystem.DemoApplicationTests

@@ -4,41 +4,56 @@ import java.util.*;
 import com.arangodb.springframework.annotation.Document;
 import org.springframework.data.annotation.Id;
 
-@Document
+@Document(value = "AuctionTable")
 public class Auction {
 
     @Id
-    private String auction_id;
+    private String auctionId;
     private String base_price;
-    private String duration;
-    private String step_rate;
+    private Date startTime;
+    private Date endTime;
+    private Integer step_rate;
     private String item_id;
     private String highest_bid;
-    private List<bid> bids = new ArrayList<bid>();
+    private List<Bid> Bids ;
+    private List<User> Users;
 
-    public Auction(String auction_id, String base_price, String duration, String base_price1, String step_rate, String item_id, String highest_bid, List<bid> bids) {
-        this.auction_id = auction_id;
+
+    public List<User> getUsers() {
+        return Users;
+    }
+
+    public void setUsers(List<User> users) {
+        Users = users;
+    }
+
+
+
+    public Auction(String auctionId, String base_price, Date startTime, Date endTime, Integer step_rate, String item_id, String highest_bid, List<User> Users, List<Bid> Bids) {
+        this.auctionId = auctionId;
         this.base_price = base_price;
-        this.duration = duration;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.step_rate = step_rate;
         this.item_id = item_id;
         this.highest_bid = highest_bid;
-        this.bids = bids;
+        this.Users = Users;
+        this.Bids = Bids;
     }
 
-    public String getAuction_id() {
-        return auction_id;
+    public String getAuctionId() {
+        return auctionId;
     }
 
-    public void setAuction_id(String auction_id) {
-        this.auction_id = auction_id;
+    public void setAuctionId(String auctionId) {
+        this.auctionId = auctionId;
     }
 
-    public String getStep_rate() {
+    public Integer getStep_rate() {
         return step_rate;
     }
 
-    public void setStep_rate(String step_rate) {
+    public void setStep_rate(Integer step_rate) {
         this.step_rate = step_rate;
     }
 
@@ -58,19 +73,34 @@ public class Auction {
         this.highest_bid = highest_bid;
     }
 
-    public List<bid> getBids() {
-        return bids;
+    public List<Bid> getBids() {
+        return Bids;
     }
 
-    public void setBids(List<bid> bids) {
-        this.bids = bids;
+    public void setBids(List<Bid> Bids) {
+        this.Bids = Bids;
+    }
+    public String getBase_price() {
+        return base_price;
     }
 
-    public String getDuration() {
-        return duration;
+    public void setBase_price(String base_price) {
+        this.base_price = base_price;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }
