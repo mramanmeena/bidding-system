@@ -1,17 +1,15 @@
 package com.example.biddingsystem.controllers;
 import com.example.biddingsystem.entity.Auction;
 import com.example.biddingsystem.entity.Bid;
+import com.example.biddingsystem.entity.EmailDetails;
 import com.example.biddingsystem.entity.User;
-import com.example.biddingsystem.repository.AuctionService;
-import org.apache.catalina.connector.Response;
+import com.example.biddingsystem.services.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.biddingsystem.services.EmailService;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -21,11 +19,20 @@ public class AuctionController {
 
     @Autowired
     AuctionService AuctionService;
+    @Autowired  EmailService emailService;
 
+
+    @PostMapping("/sendMail")
+    public ResponseEntity<String> sendMail(@RequestBody EmailDetails details)
+    {   log.info("details - {}",details);
+        String status = emailService.winningMail(details);
+        log.info("status - {}",status);
+        return new ResponseEntity<String>(status,HttpStatus.ACCEPTED);
+    }
     @PostMapping ("/new")
     public ResponseEntity<Auction> createAuction(@RequestBody Auction auction) throws Exception {
         log.info("Auction created successfully!,{}",auction );
-        if (!(auction == null || auction.getItem_id() == null || auction.getEndTime() == null || auction.getStep_rate() == null)) {
+        if (!(auction == null || auction.getItemId() == null || auction.getEndTime() == null || auction.getStepRate() == null)) {
             return new ResponseEntity<Auction> (AuctionService.createAuction(auction),HttpStatus.CREATED);
 
         } else {
@@ -61,7 +68,7 @@ public class AuctionController {
     @GetMapping("/all")
     public ResponseEntity<Iterable<Auction>> AllAuctions    ()  throws Exception {
         try {
-            return new ResponseEntity<Iterable<Auction>>(AuctionService.liveAuctions(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<Iterable<Auction>>(AuctionService.AllAuctions(), HttpStatus.ACCEPTED);
         }
         catch (Exception e) {   return new ResponseEntity<Iterable<Auction>>(HttpStatus.BAD_REQUEST);}
 
@@ -79,11 +86,11 @@ public class AuctionController {
     }
 
     @GetMapping("/winner")
-    public ResponseEntity<User> GetWinner(@RequestBody String item_id) throws Exception {
+    public ResponseEntity<User> GetWinner(@RequestParam String itemId) throws Exception {
         try {
             log.info("looser");
 
-            Optional<User> winner = AuctionService.getWinner(item_id);
+            Optional<User> winner = AuctionService.getWinner(itemId);
             log.info("winner");
             return new ResponseEntity<User>( winner.get(),HttpStatus.ACCEPTED);
         }
@@ -117,16 +124,4 @@ public class AuctionController {
 
     }
 
-//    @GetMapping("/bids")
-//    public ResponseEntity<Iterable<Bid>> Bids () throws Exception {
-//        try {
-//            log.info("LiveAuctions returned {}", AuctionService.liveAuctions());
-//
-//            return new ResponseEntity<Iterable<Bid>>(AuctionService.fetchBids(),HttpStatus.ACCEPTED);
-//        }
-//        catch (Exception e) {
-//            return new ResponseEntity<Iterable<Bid>>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//    }
 }

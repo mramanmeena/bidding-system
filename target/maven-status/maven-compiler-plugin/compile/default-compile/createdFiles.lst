@@ -1,12 +1,16 @@
 com/example/biddingsystem/controllers/HealthController.class
 com/example/biddingsystem/repository/UserTable.class
-com/example/biddingsystem/repository/AuctionService.class
 com/example/biddingsystem/entity/User.class
+com/example/biddingsystem/services/EmailServiceImpl.class
+com/example/biddingsystem/entity/EmailDetails.class
 com/example/biddingsystem/repository/BidTable.class
 com/example/biddingsystem/ArangoDBConfiguration.class
 com/example/biddingsystem/BiddingSystem.class
 com/example/biddingsystem/controllers/AuctionController.class
 com/example/biddingsystem/entity/Auction.class
+com/example/biddingsystem/services/EmailService.class
+com/example/biddingsystem/services/AuctionService.class
 com/example/biddingsystem/entity/item.class
 com/example/biddingsystem/entity/Bid.class
+com/example/biddingsystem/scheduler/ExpiredScheduler.class
 com/example/biddingsystem/repository/AuctionTable.class

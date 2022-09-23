@@ -1,8 +1,15 @@
 package com.example.biddingsystem.entity;
 import com.arangodb.springframework.annotation.Document;
 import org.springframework.data.annotation.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Document
+
 public class User {
 
     @Id
@@ -13,36 +20,6 @@ public class User {
     private String name;
 
 
-    public User(String id, String email, String name) {
-        super();
-        this.id = id;
-        this.email = email;
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
 
 
