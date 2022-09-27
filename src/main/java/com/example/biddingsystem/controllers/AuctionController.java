@@ -66,8 +66,11 @@ public class AuctionController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Iterable<Auction>> AllAuctions    ()  throws Exception {
+    public ResponseEntity<Iterable<Auction>> AllAuctions (@RequestParam (value= "pageNumber",defaultValue ="1",required = false)Integer pageNumber,
+                                                          @RequestParam (value= "pageSize",defaultValue ="5",required = false)Integer pageSize
+                                                          )  throws Exception {
         try {
+;
             return new ResponseEntity<Iterable<Auction>>(AuctionService.AllAuctions(), HttpStatus.ACCEPTED);
         }
         catch (Exception e) {   return new ResponseEntity<Iterable<Auction>>(HttpStatus.BAD_REQUEST);}
@@ -88,10 +91,7 @@ public class AuctionController {
     @GetMapping("/winner")
     public ResponseEntity<User> GetWinner(@RequestParam String itemId) throws Exception {
         try {
-            log.info("looser");
-
             Optional<User> winner = AuctionService.getWinner(itemId);
-            log.info("winner");
             return new ResponseEntity<User>( winner.get(),HttpStatus.ACCEPTED);
         }
         catch (Exception e) {

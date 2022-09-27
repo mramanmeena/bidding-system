@@ -18,8 +18,9 @@ import java.util.Optional;
 @Repository
 
 
-public interface AuctionTable extends ArangoRepository<Auction, String> {
+public interface AuctionTable extends ArangoRepository <Auction, String> {
 
 
     Optional<Auction> findByAuctionId(String auction_id);
+
 }

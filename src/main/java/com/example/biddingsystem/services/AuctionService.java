@@ -7,6 +7,8 @@ import com.example.biddingsystem.repository.BidTable;
 import com.example.biddingsystem.repository.UserTable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.biddingsystem.entity.Bid;
 import com.example.biddingsystem.entity.User;
@@ -31,8 +33,9 @@ public class AuctionService {
 
     public Auction createAuction(Auction auction) throws Exception {
         List < Auction > auctions = liveAuctions();
+
         for (Auction pr_check: auctions) {
-            if (pr_check.getItemId() == auction.getItemId() || (auction.getStartTime().toInstant().toEpochMilli() > auction.getEndTime().toInstant().toEpochMilli())) {
+            if (pr_check.getItemId().equals(auction.getItemId())|| (auction.getStartTime().toInstant().toEpochMilli() > auction.getEndTime().toInstant().toEpochMilli())) {
                 return null;
             }
         }
@@ -45,6 +48,8 @@ public class AuctionService {
     }
 
     public List < Auction > AllAuctions() throws Exception {
+
+//        Pageable p = PageRequest.of();
         return (List < Auction > ) auctiontable.findAll();
     }
 
@@ -55,7 +60,7 @@ public class AuctionService {
     //        return (List<Bid>) BidTable.findAll();
     //    }
     public List < Auction > liveAuctions() throws Exception {
-        List < Auction > auctions = AllAuctions();
+        List < Auction > auctions =(List < Auction > ) auctiontable.findAll();
         List < Auction > liveAuctions = new ArrayList < Auction > ();
         for (Auction auction: auctions) {
             if (auction.getEndTime().toInstant().toEpochMilli() > Instant.now().toEpochMilli()) {
@@ -66,7 +71,7 @@ public class AuctionService {
     }
 
     public boolean isLive(String auction_id) throws Exception {
-        List < Auction > auctions = AllAuctions();
+        List < Auction > auctions = (List < Auction > ) auctiontable.findAll();
         List < Auction > liveAuctions = new ArrayList < Auction > ();
         for (Auction auction: auctions) {
             if (auction.getEndTime().toInstant().toEpochMilli() > Instant.now().toEpochMilli() && auction.getAuctionId().equals(auction_id)) {
@@ -77,7 +82,7 @@ public class AuctionService {
     }
 
     public Auction getAuctionByitem(String item_id) throws Exception {
-        List < Auction > auctions = AllAuctions();
+        List < Auction > auctions = (List < Auction > ) auctiontable.findAll();
         List < Auction > liveAuctions = new ArrayList < Auction > ();
         for (Auction auction: auctions) {
             if ((auction.getItemId() != null) && (auction.getItemId().equals(item_id))) {
