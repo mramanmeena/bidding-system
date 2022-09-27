@@ -113,16 +113,18 @@ public class AuctionService {
 
                 if (auction.getBids() == null) {
                     auction.setBids(new ArrayList < > ());
-                    auction.getBids().add(bid);
+                    auction.setHighestBid(bid_amount);
+                    auction.setWinnerId(user_id);
+                    bid.setStatus("Accepted");
                 } else {
                     if (!auction.getBids().contains(bid)) {
-                        int maxBid = maxBid(auction.getAuctionId());
-                        if (bid_amount >= maxBid + auction.getStepRate()) {
-                            auction.getBids().add(bid);
+                        int max = maxBid(auction.getAuctionId());
+                        if (bid_amount >= max + auction.getStepRate()) {
+                            auction.setHighestBid(bid_amount);
+                            auction.setWinnerId(user_id);
                             bid.setStatus("Accepted");
                             auction.getUsers().add(user.get());
                         } else {
-                            auction.getBids().add(bid);
                             bid.setStatus("Not Accepted");
                             auction.getUsers().add(user.get());
                         }
@@ -130,6 +132,7 @@ public class AuctionService {
                     }
                 }
             }
+            auction.getBids().add(bid);
             auctiontable.deleteById(auction.getAuctionId());
             auctiontable.save(auction);
         }
@@ -140,45 +143,17 @@ public class AuctionService {
         log.info("c1 : {}", item_id);
 
         Auction auction = getAuctionByitem(item_id);
-        int MAX_BID = 0;
-        String WINNER_ID = null;
-        log.info("c1 : {}", auction);
-        if(auction!= null) {
-        List < Bid > bids = auction.getBids();
-        log.info("c2 : {}", bids);
-        if (bids != null) {
-        for (Bid bid: bids) {
-            log.info("{}  {} {}", bid.getBidAmount(), MAX_BID, bid.getStatus());
-            if (bid.getStatus() != null ){
-            if (bid.getBidAmount() > MAX_BID && bid.getStatus().equals("Accepted")) {
-                MAX_BID = bid.getBidAmount();
-                WINNER_ID = bid.getUserId();
-                log.info("c1 : {}", WINNER_ID);
 
-            }}
-
-        }}
-            Optional < User > winner = userTable.findById(WINNER_ID);
-            return winner;
-        }
+        if ( auction.getWinnerId() != null && !auction.getWinnerId().equals(""))
+            return userTable.findById(auction.getWinnerId());
         return null;
 
     }
 
     public int maxBid(String auction_id) throws Exception {
         Optional < Auction > auction = auctiontable.findById(auction_id);
-        int MAX_BID = 0;
-        String WINNER_ID = null;
-        if (auction.isPresent()) {
-            Auction new_auction = auction.get();
-            List < Bid > bids = new_auction.getBids();
-            for (Bid bid: bids) {
-                if (bid.getBidAmount() > MAX_BID ) {
-                    MAX_BID = bid.getBidAmount();
-                    WINNER_ID = bid.getUserId();
-                }
-            }
-            return MAX_BID;
+        if (auction.get().getHighestBid()!=null) {
+            return auction.get().getHighestBid();
         }
         return 0;
     }

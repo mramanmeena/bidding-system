@@ -23,5 +23,7 @@ public class Auction {
     private String status;
     private List<Bid> Bids ;
     private List<User> Users;
+    private String winnerId;
+    private Integer highestBid;
 
 }
