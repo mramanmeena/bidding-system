@@ -32,46 +32,42 @@ public class ExpiredScheduler {
     UserTable userTable;
 
     @Scheduled( cron = "${cron}" )
-    @Transactional
     public void markExpired() throws Exception {
 
-        List<Auction> auctions = (List<Auction>) auctiontable.findAll();
+        List<Auction> auctions = (List<Auction>) auctionService.AllAuctions();
         for (Auction auction: auctions) {
             log.info("auctions list {}{}",auction.getAuctionId(),auction.getStatus());
-            if (auction.getStatus().equals("Live") && auction.getBids() == null &&(auction.getEndTime().toInstant().toEpochMilli() < Instant.now().toEpochMilli() )){
+
+            if ((auction.getStatus()==null  || auction.getStatus().isEmpty()) && (auction.getStartTime().toInstant().toEpochMilli() <= Instant.now().toEpochMilli())) {
+                    log.info("Auction with auction_id {} is live", auction.getAuctionId());
+                    auction.setStatus("Live");
+                    auctiontable.save(auction);
+            }
+            else if (auction.getStatus().equals("Live") && auction.getWinnerId() == null &&(auction.getEndTime().toInstant().toEpochMilli() < Instant.now().toEpochMilli() )){
                 auction.setStatus("Expired");
-                auctiontable.deleteById(auction.getAuctionId());
                 auctiontable.save(auction);
             }
-            else if ((auction.getStatus().equals("Live")) && (auction.getBids() != null )&& (auction.getEndTime().toInstant().toEpochMilli() < Instant.now().toEpochMilli()) ){
+            else if ((auction.getStatus().equals("Live")) && (auction.getWinnerId() != null )&& (auction.getEndTime().toInstant().toEpochMilli() < Instant.now().toEpochMilli()) ){
                 log.info("Sending Mail to the Winner of the auction with auction_id {} {}",auction.getAuctionId(),auction.getStatus());
                 Optional<User> winner  = auctionService.getWinner(auction.getItemId());
                 EmailDetails details = new EmailDetails();
 
-                 if (winner != null && winner.isPresent()){
+                 if (winner.isPresent()){
                     details.setRecipient(winner.get().getEmail());
                     details.setMsgBody("You Won");
                     details.setSubject("Congratulations");
                     emailService.winningMail(details);
                     }
                 auction.setStatus("Expired");
-                auctiontable.deleteById(auction.getAuctionId());
                 auctiontable.save(auction);
             }
 
             else if (auction.getEndTime().toInstant().toEpochMilli() < Instant.now().toEpochMilli() && !(auction.getStatus().equals("Expired"))) {
 //                log.info("Auction with auction_id {} Expired",auction.getAuctionId());
                 auction.setStatus("Expired");
-                auctiontable.deleteById(auction.getAuctionId());
                 auctiontable.save(auction);
             }
-            else  {
-//                log.info("Auction with auction_id {} is live", auction.getAuctionId());
-                if (auction.getStatus().isEmpty() || auction.getStatus()==null) {}
-                    auction.setStatus("Live");
-                    auctiontable.deleteById(auction.getAuctionId());
-                    auctiontable.save(auction);
-            }
+
         }
     }
 }

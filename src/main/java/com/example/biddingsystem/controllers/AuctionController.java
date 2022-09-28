@@ -29,14 +29,13 @@ public class AuctionController {
         log.info("status - {}",status);
         return new ResponseEntity<String>(status,HttpStatus.ACCEPTED);
     }
-    @PostMapping ("/new")
+    @PostMapping
     public ResponseEntity<Auction> createAuction(@RequestBody Auction auction) throws Exception {
-        log.info("Auction created successfully!,{}",auction );
-        if (!(auction == null || auction.getItemId() == null || auction.getEndTime() == null || auction.getStepRate() == null)) {
+        if (!(auction == null || auction.getItemId() == null || auction.getEndTime() == null || auction.getStepRate() == null )) {
             return new ResponseEntity<Auction> (AuctionService.createAuction(auction),HttpStatus.CREATED);
 
         } else {
-            return new ResponseEntity<Auction>(HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<Auction>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -83,6 +82,7 @@ public class AuctionController {
            return new ResponseEntity<>(AuctionService.placeBid(bid), HttpStatus.ACCEPTED);
        }
        catch (Exception e) {
+           log.info("Exception occurred{}", e);
            return new ResponseEntity<Bid>(HttpStatus.BAD_REQUEST);
 
        }

@@ -16,9 +16,10 @@ public class Bid {
     @Id
     private String bidId;
     private String userId;
-    private Integer bidAmount;
+    private int bidAmount;
     private String status;
     private String itemId;
+    private String auctionId;
 
 
     }

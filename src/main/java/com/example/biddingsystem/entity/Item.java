@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 
 @Document(value = "item")
-public class item {
+public class Item {
 
     @Id
     private String id;

@@ -21,8 +21,6 @@ public class Auction {
     private Integer stepRate;
     private String itemId;
     private String status;
-    private List<Bid> Bids ;
-    private List<User> Users;
     private String winnerId;
     private Integer highestBid;
 

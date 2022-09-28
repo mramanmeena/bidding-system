@@ -1,5 +1,4 @@
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/repository/BidTable.java
-/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/entity/item.java
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/services/EmailServiceImpl.java
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/BiddingSystem.java
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/repository/AuctionTable.java
@@ -9,6 +8,7 @@
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/entity/Auction.java
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/repository/UserTable.java
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/services/EmailService.java
+/Users/aman/bidding-system/src/main/java/com/example/biddingsystem/entity/Item.java
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/controllers/AuctionController.java
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/ArangoDBConfiguration.java
 /Users/aman/bidding-system/src/main/java/com/example/biddingsystem/entity/Bid.java
